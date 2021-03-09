@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "ofMain.h"
-#include "cell.h"
 #include "matrix.h"
 
 class ofApp : public ofBaseApp{
@@ -11,17 +10,9 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 
-		int getActiveNeighbors(int column, int row);
-		int currentCellState(int column, int row);
-
-		void makeNextStateCurrent();
-
-		void randomGrid();
-
 		void draw();
-		void clear();
 
-		Matrix matrix;
+		Matrix* matrix;
 		int rows, cols;
 		float cellWidth, cellHeight;
 		int sizeOfCell;

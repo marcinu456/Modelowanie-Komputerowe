@@ -1,16 +1,26 @@
 #pragma once
+ 
+#include "cell.h" 
+#include "ofMain.h" 
+ 
+class Matrix 
+{ 
+public: 
+	 
+	int rows; 
+	int columns; 
+	
+	float cellWidth, cellHeight;
+	int sizeOfCell;
 
-#include "cell.h"
-#include "ofMain.h"
-
-class Matrix
-{
-public:
-
-	int rows=50;
-	int columns=50;
-	Cell arrays[50][50];
-
-
-	Matrix();
-};
+	Cell** arrays;
+	 
+	Matrix(int rows, int columns);
+	void clear();
+	void randomGrid();
+	void update(bool active);
+	int getActiveNeighbors(int column, int row);
+	int currentCellState(int column, int row);
+	void makeNextStateCurrent();
+	void draw();
+}; 

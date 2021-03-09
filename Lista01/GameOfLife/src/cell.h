@@ -2,8 +2,7 @@
 
 #include "ofMain.h"
 
-class Cell {
-public:
+struct Cell {
 	bool currentState;
 	bool nextState;
 	int activeNeighbors;
