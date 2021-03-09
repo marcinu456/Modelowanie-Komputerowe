@@ -3,6 +3,7 @@
 #include <vector>
 #include "ofMain.h"
 #include "cell.h"
+#include "matrix.h"
 
 class ofApp : public ofBaseApp{
 
@@ -20,8 +21,7 @@ class ofApp : public ofBaseApp{
 		void draw();
 		void clear();
 
-		Cell** grid;
-		std::vector<Cell> test;
+		Matrix matrix;
 		int rows, cols;
 		float cellWidth, cellHeight;
 		int sizeOfCell;

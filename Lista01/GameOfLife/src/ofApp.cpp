@@ -23,24 +23,23 @@ void ofApp::update(){
 		for (int i = 0; i < cols; i++) {
 			for (int j = 0; j < rows; j++) {
 				
-				Cell* thisCell = &grid[i][j];
-				thisCell->activeNeighbors = getActiveNeighbors(i, j);
-				bool currentCellState = thisCell->currentState;
-				int activeNeighbors = thisCell->activeNeighbors;
+				matrix.arrays[i][j].activeNeighbors = getActiveNeighbors(i, j);
+				bool currentCellState = matrix.arrays[i][j].currentState;
+				int activeNeighbors = matrix.arrays[i][j].activeNeighbors;
 
 				if (currentCellState == true && activeNeighbors < 2) {
-					thisCell->nextState = false;
+					matrix.arrays[i][j].nextState = false;
 				}
 				else if (currentCellState == true && activeNeighbors > 3) {
-					thisCell->nextState = false;
+					matrix.arrays[i][j].nextState = false;
 				}
 				else if (currentCellState == true && activeNeighbors > 1 && activeNeighbors < 4) {
-					thisCell->nextState = true;
-					thisCell->color = ofColor::green;
+					matrix.arrays[i][j].nextState = true;
+					matrix.arrays[i][j].color = ofColor::green;
 				}
 				else if (currentCellState == false && activeNeighbors == 3) {
-					thisCell->nextState = true;
-					thisCell->color = ofColor::green;
+					matrix.arrays[i][j].nextState = true;
+					matrix.arrays[i][j].color = ofColor::green;
 				}
 			}
 		}
@@ -76,11 +75,11 @@ int ofApp::currentCellState(int column, int row)
 {
 	if (column >= 0 && row >= 0 &&
 		column < cols && row < rows &&
-		grid[column][row].currentState == true)
+		matrix.arrays[column][row].currentState == true)
 	{
 		return 1;
 	}
-	return false;
+	return 0;
 
 }
 
@@ -90,7 +89,7 @@ void ofApp::makeNextStateCurrent()
 {
 	for (int i = 0; i < cols; i++) {
 		for (int j = 0; j < rows; j++) {
-			grid[i][j].currentState = grid[i][j].nextState;
+			matrix.arrays[i][j].currentState = matrix.arrays[i][j].nextState;
 		}
 	}
 }
@@ -101,7 +100,7 @@ void ofApp::randomGrid()
 	for (int i = 0; i < cols; i++) {
 		for (int j = 0; j < rows; j++) {
 			if(rand()/(float)RAND_MAX < 0.25)
-				grid[i][j].currentState = !grid[i][j].currentState;
+				matrix.arrays[i][j].currentState = !matrix.arrays[i][j].currentState;
 		}
 	}
 
@@ -113,11 +112,10 @@ void ofApp::randomGrid()
 void ofApp::draw(){
 	for (int i = 0; i < cols; i++) {
 		for (int j = 0; j < rows; j++) {
-			Cell thisCell = grid[i][j];
 			ofSetColor(ofColor::black);
 			ofNoFill();
 			ofRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
-			if (thisCell.currentState == true) {
+			if (matrix.arrays[i][j].currentState == true) {
 				ofSetColor(ofColor::green);
 				ofFill();
 				ofRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
@@ -132,13 +130,10 @@ void ofApp::draw(){
 void ofApp::clear()
 {
 	std::cout << "clear\n";
-	grid = new Cell * [cols];
 	for (int i = 0; i < cols; i++) {
-		grid[i] = new Cell[rows];
 		for (int j = 0; j < rows; j++) {
-			Cell* thisCell = &grid[i][j];
-			thisCell->currentState = false;
-			thisCell->nextState = false;
+			matrix.arrays[i][j].currentState = false;
+			matrix.arrays[i][j].nextState = false;
 		}
 	}
 }
@@ -179,11 +174,14 @@ void ofApp::mouseDragged(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
+void ofApp::mousePressed(int x, int y, int button) {
 	int xcell = x / cellWidth;
 	int ycell = y / cellHeight;
-	if(xcell < cols && ycell < rows)
-	grid[xcell][ycell].currentState = !grid[xcell][ycell].currentState;
+	if (xcell < cols && ycell < rows)
+	{
+		//grid[xcell][ycell].currentState = !grid[xcell][ycell].currentState;
+		matrix.arrays[xcell][ycell].currentState = !matrix.arrays[xcell][ycell].currentState;
+	}
 }
 
 //--------------------------------------------------------------
