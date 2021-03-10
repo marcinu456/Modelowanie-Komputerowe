@@ -100,9 +100,9 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src;..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\libs;..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -120,10 +120,10 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src;..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\libs;..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -140,10 +140,10 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src;..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\libs;..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -163,9 +163,9 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src;..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\libs;..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -181,6 +181,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\matrix.cpp" />
+    <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxBaseGui.cpp" />
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxButton.cpp" />
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxColorPicker.cpp" />
@@ -191,10 +193,15 @@
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxSlider.cpp" />
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxSliderGroup.cpp" />
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxToggle.cpp" />
-    <ClCompile Include="src\matrix.cpp" />
-    <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
+    <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\libs\tinyxml.cpp" />
+    <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\cell.h" />
+    <ClInclude Include="src\matrix.h" />
+    <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxBaseGui.h" />
     <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxButton.h" />
     <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxColorPicker.h" />
@@ -207,9 +214,8 @@
     <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxSlider.h" />
     <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxSliderGroup.h" />
     <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxToggle.h" />
-    <ClInclude Include="src\cell.h" />
-    <ClInclude Include="src\matrix.h" />
-    <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
+    <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\libs\tinyxml.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

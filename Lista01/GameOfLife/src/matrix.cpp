@@ -6,12 +6,12 @@ Matrix::Matrix(int _rows, int _columns):
 	cellWidth = ofGetWidth() / rows;
 	cellHeight = ofGetHeight() / columns;
 
-	arrays = new Cell* [columns];
+	cell = new Cell* [columns];
 	for (int i = 0; i < columns; i++) {
-		arrays[i] = new Cell[rows];
+		cell[i] = new Cell[rows];
 		for (int j = 0; j < rows; j++) {
-			arrays[i][j].currentState = false;
-			arrays[i][j].nextState = false;
+			cell[i][j].currentState = false;
+			cell[i][j].nextState = false;
 		}
 	}
 }
@@ -20,8 +20,8 @@ void Matrix::clear()
 	std::cout << "clear\n";
 	for (int i = 0; i < columns; i++) {
 		for (int j = 0; j < rows; j++) {
-			arrays[i][j].currentState = false;
-			arrays[i][j].nextState = false;
+			cell[i][j].currentState = false;
+			cell[i][j].nextState = false;
 		}
 	}
 }
@@ -32,49 +32,51 @@ void Matrix::randomGrid()
 	for (int i = 0; i < columns; i++) {
 		for (int j = 0; j < rows; j++) {
 			if (rand() / (float)RAND_MAX < 0.25)
-				arrays[i][j].currentState = !arrays[i][j].currentState;
+				cell[i][j].currentState = !cell[i][j].currentState;
 		}
 	}
 }
 
 void Matrix::update(bool active) {
 	if (active) {
+		ofSetFrameRate(15);
 		for (int i = 0; i < columns; i++) {
 			for (int j = 0; j < rows; j++) {
 
-				arrays[i][j].activeNeighbors = getActiveNeighbors(i, j);
-				bool currentCellState = arrays[i][j].currentState;
-				int activeNeighbors = arrays[i][j].activeNeighbors;
+				cell[i][j].activeNeighbors = getActiveNeighbors(i, j);
+				bool currentCellState = cell[i][j].currentState;
+				int activeNeighbors = cell[i][j].activeNeighbors;
 
 				if (currentCellState == true && activeNeighbors < 2) {
-					arrays[i][j].nextState = false;
+					cell[i][j].nextState = false;
 				}
 				else if (currentCellState == true && activeNeighbors > 3) {
-					arrays[i][j].nextState = false;
+					cell[i][j].nextState = false;
 				}
 				else if (currentCellState == true && activeNeighbors > 1 && activeNeighbors < 4) {
-					arrays[i][j].nextState = true;
-					arrays[i][j].color = ofColor::green;
+					cell[i][j].nextState = true;
+					cell[i][j].color = ofColor::green;
 				}
 				else if (currentCellState == false && activeNeighbors == 3) {
-					arrays[i][j].nextState = true;
-					arrays[i][j].color = ofColor::green;
+					cell[i][j].nextState = true;
+					cell[i][j].color = ofColor::green;
 				}
 			}
 		}
 		makeNextStateCurrent();
 	}
+	ofSetFrameRate(60);
 }
 
 
 int Matrix::getActiveNeighbors(int column, int row)
 {
 	int howManyNeighbors = 0;
-
-	int prevCol = column - 1;
-	int nextCol = column + 1;
-	int prevRow = row - 1;
-	int nextRow = row + 1;
+	size_t r = -1;
+	int prevCol = (columns + ((column - 1) % columns)) % columns;
+	int nextCol = (columns + ((column + 1) % columns)) % columns;
+	int prevRow = (rows + ((row - 1) % rows)) % rows;
+	int nextRow = (rows + ((row + 1) % rows)) % rows;
 
 	howManyNeighbors += currentCellState(prevCol, prevRow);
 	howManyNeighbors += currentCellState(prevCol, row);
@@ -92,13 +94,10 @@ int Matrix::getActiveNeighbors(int column, int row)
 
 int Matrix::currentCellState(int column, int row)
 {
-	if (column >= 0 && row >= 0 &&
+
+	return (column >= 0 && row >= 0 &&
 		column < columns && row < rows &&
-		arrays[column][row].currentState == true)
-	{
-		return 1;
-	}
-	return 0;
+		cell[column][row].currentState == true);
 
 }
 
@@ -108,7 +107,7 @@ void Matrix::makeNextStateCurrent()
 {
 	for (int i = 0; i < columns; i++) {
 		for (int j = 0; j < rows; j++) {
-			arrays[i][j].currentState = arrays[i][j].nextState;
+			cell[i][j].currentState = cell[i][j].nextState;
 		}
 	}
 }
@@ -119,7 +118,7 @@ void Matrix::draw() {
 			ofSetColor(ofColor::black);
 			ofNoFill();
 			ofRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
-			if (arrays[i][j].currentState == true) {
+			if (cell[i][j].currentState == true) {
 				ofSetColor(ofColor::green);
 				ofFill();
 				ofRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);

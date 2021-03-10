@@ -13,7 +13,7 @@ public:
 	float cellWidth, cellHeight;
 	int sizeOfCell;
 
-	Cell** arrays;
+	Cell** cell;
 	 
 	Matrix(int rows, int columns);
 	void clear();

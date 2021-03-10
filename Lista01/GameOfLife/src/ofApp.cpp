@@ -74,7 +74,7 @@ void ofApp::mousePressed(int x, int y, int button) {
 	int ycell = y / cellHeight;
 	if (xcell < cols && ycell < rows)
 	{
-		matrix->arrays[xcell][ycell].currentState = !matrix->arrays[xcell][ycell].currentState;
+		matrix->cell[xcell][ycell].currentState = !matrix->cell[xcell][ycell].currentState;
 	}
 }
 
