@@ -9,7 +9,8 @@ public:
 	 
 	int rows; 
 	int columns; 
-	
+	size_t liveTime = 0;
+
 	float cellWidth, cellHeight;
 	int sizeOfCell;
 
@@ -22,5 +23,6 @@ public:
 	int getActiveNeighbors(int column, int row);
 	int currentCellState(int column, int row);
 	void makeNextStateCurrent();
+	void writeToFile(size_t currentLiveCell);
 	void draw();
 }; 

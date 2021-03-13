@@ -4,8 +4,8 @@
 void ofApp::setup(){
 	
 	active = false;
-	cols = 50;
-	rows = 50;
+	cols = 100;
+	rows = 100;
 
 	cellWidth = ofGetWidth() / cols;
 	cellHeight = ofGetHeight() / cols;

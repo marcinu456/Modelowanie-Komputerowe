@@ -1,5 +1,6 @@
 #include "matrix.h" 
- 
+#include <fstream>
+
 Matrix::Matrix(int _rows, int _columns):
 	rows(_rows), columns(_columns)
 {  
@@ -14,6 +15,7 @@ Matrix::Matrix(int _rows, int _columns):
 			cell[i][j].nextState = false;
 		}
 	}
+
 }
 void Matrix::clear()
 {
@@ -28,18 +30,26 @@ void Matrix::clear()
 
 void Matrix::randomGrid()
 {
+	size_t currentLiveCell = 0;
+	liveTime = 0;
 	clear();
 	for (int i = 0; i < columns; i++) {
 		for (int j = 0; j < rows; j++) {
-			if (rand() / (float)RAND_MAX < 0.25)
+			if (rand() / (float)RAND_MAX < 0.6) {
 				cell[i][j].currentState = !cell[i][j].currentState;
+				currentLiveCell++;
+			}
 		}
 	}
+	ofstream myfile;
+	myfile.open("example.txt");
+//	myfile << liveTime << "	" << currentLiveCell << "\n";
+	myfile.close();
 }
 
 void Matrix::update(bool active) {
-	if (active) {
-		ofSetFrameRate(15);
+	if (active && liveTime < 1000) {
+		size_t currentLiveCell = 0;
 		for (int i = 0; i < columns; i++) {
 			for (int j = 0; j < rows; j++) {
 
@@ -55,17 +65,20 @@ void Matrix::update(bool active) {
 				}
 				else if (currentCellState == true && activeNeighbors > 1 && activeNeighbors < 4) {
 					cell[i][j].nextState = true;
-					cell[i][j].color = ofColor::green;
 				}
 				else if (currentCellState == false && activeNeighbors == 3) {
 					cell[i][j].nextState = true;
-					cell[i][j].color = ofColor::green;
 				}
+				if (currentCellState == true)
+				{
+					currentLiveCell++;
+				}
+
 			}
 		}
+		writeToFile(currentLiveCell);
 		makeNextStateCurrent();
 	}
-	ofSetFrameRate(60);
 }
 
 
@@ -110,6 +123,15 @@ void Matrix::makeNextStateCurrent()
 			cell[i][j].currentState = cell[i][j].nextState;
 		}
 	}
+}
+
+void Matrix::writeToFile(size_t currentLiveCell)
+{
+	liveTime++;
+	ofstream myfile;
+	myfile.open("example.txt", std::ios::app);;
+	myfile << liveTime <<"	" << currentLiveCell <<"\n";
+	myfile.close();
 }
 
 void Matrix::draw() {
