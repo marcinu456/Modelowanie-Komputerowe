@@ -2,7 +2,8 @@
  
 #include "cell.h" 
 #include "ofMain.h" 
- 
+#include "../addons/ofxHistoryPlot/src/ofxHistoryPlot.h"
+
 class Matrix 
 { 
 public: 
@@ -25,4 +26,6 @@ public:
 	void makeNextStateCurrent();
 	void writeToFile(size_t currentLiveCell);
 	void draw();
+
+	ofxHistoryPlot* plot;
 }; 

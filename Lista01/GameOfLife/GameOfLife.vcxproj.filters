@@ -52,6 +52,9 @@
     <ClCompile Include="src\matrix.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="addons\ofxHistoryPlot\src\ofxHistoryPlot.cpp">
+      <Filter>addons\ofxHistoryPlot\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -74,6 +77,12 @@
     </Filter>
     <Filter Include="addons\ofxXmlSettings\libs">
       <UniqueIdentifier>{687714A8-1662-FA1C-261F-50F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxHistoryPlot">
+      <UniqueIdentifier>{cecf2072-1277-4cfc-81e0-b4e96b21c9cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxHistoryPlot\src">
+      <UniqueIdentifier>{212440e3-3836-49e5-b445-7a206191dcc7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="src\matrix.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="addons\ofxHistoryPlot\src\ofxHistoryPlot.h">
+      <Filter>addons\ofxHistoryPlot\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

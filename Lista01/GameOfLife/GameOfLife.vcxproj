@@ -180,6 +180,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="addons\ofxHistoryPlot\src\ofxHistoryPlot.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\matrix.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
@@ -199,6 +200,7 @@
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="addons\ofxHistoryPlot\src\ofxHistoryPlot.h" />
     <ClInclude Include="src\cell.h" />
     <ClInclude Include="src\matrix.h" />
     <ClInclude Include="src\ofApp.h" />

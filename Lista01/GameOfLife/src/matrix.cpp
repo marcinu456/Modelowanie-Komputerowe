@@ -16,6 +16,26 @@ Matrix::Matrix(int _rows, int _columns):
 		}
 	}
 
+
+
+	plot = new ofxHistoryPlot(NULL, "Cells", 1000, false); //NULL cos we don't want it to auto-update. confirmed by "true"
+	plot->setRange(0, 1200); //hard range, will not adapt to values off-scale
+	plot->addHorizontalGuide(ofGetHeight() / 2, ofColor(255, 0, 0)); //add custom reference guides
+	plot->setColor(ofColor::black); //color of the plot line
+	plot->setShowNumericalInfo(true);  //show the current value and the scale in the plot
+	plot->setRespectBorders(true);	   //dont let the plot draw on top of text
+	plot->setLineWidth(1);				//plot line width
+	plot->setBackgroundColor(ofColor(0, 220)); //custom bg color
+	//custom grid setup
+	plot->setDrawGrid(true);
+	plot->setGridColor(ofColor(30)); //grid lines color
+	plot->setGridUnit(14);
+	plot->setCropToRect(true);
+
+
+
+
+
 }
 void Matrix::clear()
 {
@@ -77,6 +97,7 @@ void Matrix::update(bool active) {
 			}
 		}
 		writeToFile(currentLiveCell);
+		plot->update(currentLiveCell);
 		makeNextStateCurrent();
 	}
 }
@@ -148,4 +169,5 @@ void Matrix::draw() {
 			}
 		}
 	}
+	plot->draw(1024, 10, 640, 240);
 }
