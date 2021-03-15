@@ -1,8 +1,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameOfLife", "GameOfLife.vcxproj", "{7FD42DF7-442E-479A-BA76-D0022F99702A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "openframeworksLib", "..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj", "{5837595D-ACA9-485C-8E76-729040CE4B0B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NoVis", "..\NoVis\NoVis.vcxproj", "{6B060F8C-36DF-41E5-8F85-4D969B1EF358}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,8 +32,19 @@ Global
 		{5837595D-ACA9-485C-8E76-729040CE4B0B}.Release|Win32.Build.0 = Release|Win32
 		{5837595D-ACA9-485C-8E76-729040CE4B0B}.Release|x64.ActiveCfg = Release|x64
 		{5837595D-ACA9-485C-8E76-729040CE4B0B}.Release|x64.Build.0 = Release|x64
+		{6B060F8C-36DF-41E5-8F85-4D969B1EF358}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6B060F8C-36DF-41E5-8F85-4D969B1EF358}.Debug|Win32.Build.0 = Debug|Win32
+		{6B060F8C-36DF-41E5-8F85-4D969B1EF358}.Debug|x64.ActiveCfg = Debug|x64
+		{6B060F8C-36DF-41E5-8F85-4D969B1EF358}.Debug|x64.Build.0 = Debug|x64
+		{6B060F8C-36DF-41E5-8F85-4D969B1EF358}.Release|Win32.ActiveCfg = Release|Win32
+		{6B060F8C-36DF-41E5-8F85-4D969B1EF358}.Release|Win32.Build.0 = Release|Win32
+		{6B060F8C-36DF-41E5-8F85-4D969B1EF358}.Release|x64.ActiveCfg = Release|x64
+		{6B060F8C-36DF-41E5-8F85-4D969B1EF358}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {93EAE72D-FDD1-4989-A6D9-52C7B900F10C}
 	EndGlobalSection
 EndGlobal

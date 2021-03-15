@@ -1,13 +1,10 @@
 #include "matrix.h" 
-#include <fstream>
 
-Matrix::Matrix(int _rows, int _columns):
+
+Matrix::Matrix(int _rows, int _columns) :
 	rows(_rows), columns(_columns)
-{  
-	cellWidth = ofGetWidth() / rows;
-	cellHeight = ofGetWidth() / columns;
-
-	cell = new Cell* [columns];
+{
+	cell = new Cell * [columns];
 	for (int i = 0; i < columns; i++) {
 		cell[i] = new Cell[rows];
 		for (int j = 0; j < rows; j++) {
@@ -16,66 +13,47 @@ Matrix::Matrix(int _rows, int _columns):
 		}
 	}
 
+	liveCellVector.resize(100);
 
-
-	plot = new ofxHistoryPlot(NULL, "Cells", 1000, false); //NULL cos we don't want it to auto-update. confirmed by "true"
-	plot->setRange(0, 1); //hard range, will not adapt to values off-scale
-	//plot->addHorizontalGuide(ofGetHeight() / 2, ofColor(255, 0, 0)); //add custom reference guides
-	plot->setColor(ofColor::black); //color of the plot line
-	plot->setShowNumericalInfo(true);  //show the current value and the scale in the plot
-	plot->setRespectBorders(true);	   //dont let the plot draw on top of text
-	plot->setLineWidth(1);				//plot line width
-	plot->setBackgroundColor(ofColor(220, 220)); //custom bg color
-	//custom grid setup
-	plot->setDrawGrid(true);
-	plot->setGridColor(ofColor(225)); //grid lines color
-	plot->setGridUnit(100);
-	plot->setCropToRect(true);
-
-
-
-	//ofSetBackgroundAuto(false);
-
+	std::ofstream myfile;
+	myfile.open("example.txt");
+	myfile.close();
 }
 void Matrix::clear()
 {
-	plot->reset();
-	std::cout << "clear\n";
+	howMany++;
+	std::cout << howMany << " clear\n";
 	for (int i = 0; i < columns; i++) {
 		for (int j = 0; j < rows; j++) {
 			cell[i][j].currentState = false;
 			cell[i][j].nextState = false;
 		}
 	}
-	liveTime = 0;
 }
 
-void Matrix::randomGrid(double chanceToLive)
+void Matrix::randomGrid()
 {
 	std::random_device rd{};
 	std::mt19937 engine{ rd() };
 	std::uniform_real_distribution<double> dis(0.0, 1.0);
 	size_t currentLiveCell = 0;
-
+	liveTime = 0;
 	clear();
 	for (int i = 0; i < columns; i++) {
 		for (int j = 0; j < rows; j++) {
-			if (dis(rd) < chanceToLive) {
+			if (dis(rd) < 0.6) {
 				cell[i][j].currentState = !cell[i][j].currentState;
 				currentLiveCell++;
 			}
 		}
 	}
-	ofstream myfile;
-	myfile.open("example.txt");
-//	myfile << liveTime << "	" << currentLiveCell << "\n";
-	myfile.close();
 
 }
 
-void Matrix::update(bool active) {
-	if (active && liveTime < 1000) {
-		
+void Matrix::update(bool active, size_t index) {
+	//std::cout << "start\n";
+	while (active && liveTime < timeIndex) {
+
 		size_t currentLiveCell = 0;
 		for (int i = 0; i < columns; i++) {
 			for (int j = 0; j < rows; j++) {
@@ -103,12 +81,11 @@ void Matrix::update(bool active) {
 
 			}
 		}
-		writeToFile(currentLiveCell);
-		double p = double(currentLiveCell) / (double(columns) * double(rows));
-		std::cout << p << "\n";
-		plot->update(p);
+		liveTime++;
+		liveCellVector[index].push_back(currentLiveCell);
 		makeNextStateCurrent();
 	}
+	//std::cout << "end\n";
 }
 
 
@@ -139,7 +116,7 @@ int Matrix::currentCellState(int column, int row)
 {
 
 	return (column >= 0 && row >= 0 &&
-		column < columns && row < rows &&
+		column < columns&& row < rows&&
 		cell[column][row].currentState == true);
 
 }
@@ -157,36 +134,22 @@ void Matrix::makeNextStateCurrent()
 
 void Matrix::writeToFile(size_t currentLiveCell)
 {
-	liveTime++;
-	ofstream myfile;
-	myfile.open("example.txt", std::ios::app);;
-	myfile << liveTime <<"	" << currentLiveCell <<"\n";
-	myfile.close();
-}
+	
+	std::ofstream myfile;
+	myfile.open("example.txt", std::ios::app);
 
-void Matrix::draw() {
-	for (int i = 0; i < columns; i++) {
-		for (int j = 0; j < rows; j++) {
-			ofSetColor(ofColor::black);
-			ofNoFill();
-			ofRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
-			if (cell[i][j].currentState == true) {
-				ofSetColor(ofColor::green);
-				ofFill();
-				ofRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
-				ofNoFill();
-			}
-		}
-	}
-	plot->draw(1024, 10, 840, 640);
-}
-
-void Matrix::mousePressed(int x, int y, int button)
-{
-	int xcell = x / cellWidth;
-	int ycell = y / cellHeight;
-	if (xcell < columns && ycell < rows)
+	for (size_t i = 0; i < timeIndex; i++)
 	{
-		cell[xcell][ycell].currentState = !cell[xcell][ycell].currentState;
+		myfile << i; 
+		for (size_t j = 0; j < liveCellVector.size(); j++)
+		{
+			myfile << "	" << liveCellVector[j][i];
+		}
+		myfile << "\n";
 	}
+	myfile.close();
+
+
+
+
 }

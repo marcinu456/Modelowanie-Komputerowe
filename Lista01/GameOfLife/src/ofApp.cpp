@@ -12,8 +12,8 @@ void ofApp::setup(){
 	matrix = new Matrix(cols, rows);
 
 
-	ofBackground(ofColor::white);
-	ofSetFrameRate(60);
+	ofBackground(ofColor::gray);
+	ofSetVerticalSync(false);
 }
 
 
@@ -44,9 +44,22 @@ void ofApp::keyPressed(int key){
 			break;
 		case 'r':
 			matrix->clear();
+			active = false;
 			break;
-		case 'f':
-			matrix->randomGrid();
+		case '1':
+			matrix->randomGrid(0.1);
+			break;
+		case '2':
+			matrix->randomGrid(0.3);
+			break;
+		case '3':
+			matrix->randomGrid(0.6);
+			break;
+		case '4':
+			matrix->randomGrid(0.75);
+			break;
+		case '5':
+			matrix->randomGrid(0.8);
 			break;
 		default:
 			break;
@@ -70,12 +83,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
-	int xcell = x / cellWidth;
-	int ycell = y / cellHeight;
-	if (xcell < cols && ycell < rows)
-	{
-		matrix->cell[xcell][ycell].currentState = !matrix->cell[xcell][ycell].currentState;
-	}
+	matrix->mousePressed(x, y, button);
 }
 
 //--------------------------------------------------------------
