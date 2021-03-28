@@ -61,6 +61,12 @@ void ofApp::keyPressed(int key){
 		case '5':
 			matrix->randomGrid(0.8);
 			break;
+		case '0':
+			matrix->randomGrid(0.05);
+			break;
+		case '6':
+			matrix->randomGrid(0.95);
+			break;
 		default:
 			break;
 	}

@@ -1,0 +1,10 @@
+Zad 2:
+Przy prawdopodobieństwach  0.1, 0.3, 0.6, 0.75, wszystkie one zmierzają do podobnej wartości gęstości wynoszącej ok. 0.02 
+oraz każda z nich w pierwszym kroku miała ogromny spadek populacji, żeby przez kolejne iteracje ten stan się stabilizował.
+Dla prawdopodobieńst wynoszących 0.05, 0.8, wartość gęstości wynosi ok 0.002, dla 0.95 komórki umierały praktycznie od razu.
+Przy wartości prawdopodobieństwa wynoszącej ok. 0.3 spadek gęstości nie jest nagły. Barierą prawdopodobieństa dla mnie 
+było 0.85, po przekroczeniu tej wartośći komórki umierały od razu, wartość dolna to 0.03
+
+Zad 3:
+Im większa siatka punktów, tym o wiele mniejszy jest błąd, z ciekawości uruchomiłem program z siatką 1000x1000
+z T = 5000, błąd wtedy był jeszcze mniejszy a punkty nadal się nie ustabilizowały

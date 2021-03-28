@@ -3,6 +3,7 @@
 #include "cell.h" 
 #include "ofMain.h" 
 #include "../addons/ofxHistoryPlot/src/ofxHistoryPlot.h"
+#include "ofxGui.h"
 #include <random>
 
 class Matrix 
@@ -14,7 +15,6 @@ public:
 	size_t liveTime = 0;
 
 	float cellWidth, cellHeight;
-	int sizeOfCell;
 
 	Cell** cell;
 	 
@@ -30,4 +30,7 @@ public:
 	void mousePressed(int x, int y, int button);
 
 	ofxHistoryPlot* plot;
+
+	ofxPanel gui;
+	ofxFloatSlider chanceToLiveD;
 }; 

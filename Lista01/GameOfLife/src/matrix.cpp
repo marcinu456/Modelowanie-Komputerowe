@@ -16,8 +16,6 @@ Matrix::Matrix(int _rows, int _columns):
 		}
 	}
 
-
-
 	plot = new ofxHistoryPlot(NULL, "Cells", 1000, false); //NULL cos we don't want it to auto-update. confirmed by "true"
 	plot->setRange(0, 1); //hard range, will not adapt to values off-scale
 	//plot->addHorizontalGuide(ofGetHeight() / 2, ofColor(255, 0, 0)); //add custom reference guides
@@ -34,7 +32,8 @@ Matrix::Matrix(int _rows, int _columns):
 
 
 
-	//ofSetBackgroundAuto(false);
+	gui.setup();
+	gui.add(chanceToLiveD.setup("P", 0.5, 0, 1));
 
 }
 void Matrix::clear()
@@ -60,7 +59,7 @@ void Matrix::randomGrid(double chanceToLive)
 	clear();
 	for (int i = 0; i < columns; i++) {
 		for (int j = 0; j < rows; j++) {
-			if (dis(rd) < chanceToLive) {
+			if (dis(rd) < chanceToLiveD) {
 				cell[i][j].currentState = !cell[i][j].currentState;
 				currentLiveCell++;
 			}
@@ -68,13 +67,12 @@ void Matrix::randomGrid(double chanceToLive)
 	}
 	ofstream myfile;
 	myfile.open("example.txt");
-//	myfile << liveTime << "	" << currentLiveCell << "\n";
 	myfile.close();
 
 }
 
 void Matrix::update(bool active) {
-	if (active && liveTime < 1000) {
+	if (active && liveTime < 2000) {
 		
 		size_t currentLiveCell = 0;
 		for (int i = 0; i < columns; i++) {
@@ -115,7 +113,7 @@ void Matrix::update(bool active) {
 int Matrix::getActiveNeighbors(int column, int row)
 {
 	int howManyNeighbors = 0;
-	size_t r = -1;
+
 	int prevCol = (columns + ((column - 1) % columns)) % columns;
 	int nextCol = (columns + ((column + 1) % columns)) % columns;
 	int prevRow = (rows + ((row - 1) % rows)) % rows;
@@ -137,11 +135,9 @@ int Matrix::getActiveNeighbors(int column, int row)
 
 int Matrix::currentCellState(int column, int row)
 {
-
 	return (column >= 0 && row >= 0 &&
 		column < columns && row < rows &&
 		cell[column][row].currentState == true);
-
 }
 
 
@@ -179,6 +175,7 @@ void Matrix::draw() {
 		}
 	}
 	plot->draw(1024, 10, 840, 640);
+	gui.draw();
 }
 
 void Matrix::mousePressed(int x, int y, int button)
