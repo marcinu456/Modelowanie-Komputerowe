@@ -3,10 +3,10 @@
 Eden::Eden(size_t N):
 	N(N), NN(N*N)//, arr(std::make_unique<bool[]>(NN))
 {
-	arr.reserve(NN);
-	for (int i = 0; i < NN; i++)
+	arr.resize(N);
+	for (int i = 0; i < N; i++)
 	{
-			arr[i].reserve(N);		
+			arr[i].resize(N);
 	}
 	/*	for (int i = 0; i < NN; i++)
 	{
@@ -52,7 +52,7 @@ void Eden::write_bmp_2D(const char* path, const unsigned width, const unsigned h
 	for (unsigned i = 0; i < 54; i++) img[i] = header[i];
 	for (unsigned y = 0; y < height; y++) {
 		for (unsigned x = 0; x < width; x++) {
-			const int color = (data[x + (height - 1 - y) * width] ? ((((255) << 8) + 255) << 8) + 255 : 0);
+			const int color = (data[x][y] ? ((((255) << 8) + 255) << 8) + 255 : 0);
 			const int i = 54 + 3 * x + y * (3 * width + pad);
 			img[i] = (char)(color & 255);
 			img[i + 1] = (char)((color >> 8) & 255);
@@ -64,11 +64,35 @@ void Eden::write_bmp_2D(const char* path, const unsigned width, const unsigned h
 	file.write(img, filesize);
 	file.close();
 	delete[] img;
+
+
+
+
+
+
+
+
+
+
+
+	/*
+	FILE* f = fopen("out.ppm", "wb");
+	fprintf(f, "P6\n%i %i 255\n", width, height);
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			const int color = (data[x][y] ? ((((255) << 8) + 255) << 8) + 255 : 0);
+			fputc(color, f);   // 0 .. 255
+			fputc(color, f); // 0 .. 255
+			fputc(color, f);  // 0 .. 255
+		}
+	}
+	fclose(f);
+	*/
 }
 
 void Eden::Licz()
 {
-	/*
+	
 	static std::random_device rd;
 	static std::mt19937 gen(rd());
 	static std::uniform_real_distribution<double> dist(0.0, 1.0);
@@ -78,9 +102,9 @@ void Eden::Licz()
 	alive.resize(NN);
 	size_t potentCount = 0;
 	size_t matureIndex = NN - 1;
-
-	alive[potentCount++] = &arr[N / 2 + NN / 2];
-	*alive[0] = true;
+	bool sram[1000 * 1000] = { false };
+	//alive[potentCount++] = &sram[N / 2 + NN / 2];// arr[N / 2 + NN / 2];
+	//*alive[0] = true;
 
 	std::string dirName_0 = "data/";
 	std::filesystem::create_directory(dirName_0.c_str());
@@ -92,7 +116,7 @@ void Eden::Licz()
 	for (size_t iter = 0; iter < TOTAL_ITER; iter++) {
 		bool foundPotent = false;
 		int potent;
-		do {
+		/*do {
 			potent = dist(gen) * potentCount;
 			bool* neighbour_U = (alive[potent] - N * sizeof(bool));
 			bool* neighbour_D = (alive[potent] + N * sizeof(bool));
@@ -123,12 +147,21 @@ void Eden::Licz()
 				alive[matureIndex--] = alive[potent];
 				alive[potent] = alive[--potentCount];
 			}
-		} while (!foundPotent);
+		} while (!foundPotent);*/
 
+		for (size_t i = 0; i < N; i++)
+		{
+			for (size_t j = 0; j < N; j++)
+			{
+				if (dist(rd) < 0.5) {
+					arr[i][j] = true;
+				}
+			}
+		}
 
 		if (!((iter + 1) % static_cast<long>(offset))) {
 			offset *= offsetMultiplier;
-			if (true) {
+			/*if (true) {
 				int x = [&]() {
 					int ret = 0;
 					for (int i = 0; i < N; i++) {
@@ -171,7 +204,7 @@ void Eden::Licz()
 				double r = (r0 + r1 + r2 + r3 + (r01 + r12 + r23 + r30) * std::sqrt(2)) / 8.0;
 
 				ofs << iter + 2 << " " << r << "\n";
-			}
+			}*/
 			if (true) {
 				std::string imgName = "eden(" + std::to_string(iter) + ").bmp";
 				write_bmp_2D((dirName_1 + imgName).c_str(), N, N, arr);
@@ -180,5 +213,5 @@ void Eden::Licz()
 
 		}
 	}
-	ofs.close();*/
+	ofs.close();
 }
