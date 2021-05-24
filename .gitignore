@@ -349,3 +349,8 @@ healthchecksdb
 MigrationBackup/
 
 *.txt
+*.bmp
+*.png
+*.jpg
+*.jpeg
+*.7z
