@@ -412,6 +412,7 @@ int main() {
 
 	Eden eden(1000);
 	eden.Licz();
+	//eden.run();
 
 	//if (TASK_PART == 0) task_0();
 	if (TASK_PART == 1) task_1();

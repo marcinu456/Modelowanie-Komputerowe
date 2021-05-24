@@ -9,6 +9,13 @@
 #include <string>
 #include <stdint.h>
 
+struct Cell {
+	bool currentState = false;
+	int activeNeighbors = 0;
+	int number = 0;
+	int posX = 0;
+	int posY = 0;
+};
 
 class Eden
 {
@@ -22,8 +29,13 @@ class Eden
 	//std::unique_ptr<bool[]> arr;
 	void write_bmp(const char* path, const unsigned width, const unsigned height, const bool* const data);
 	void write_bmp_2D(const char* path, const unsigned width, const unsigned height, const std::vector<std::vector<bool>> data);
+	void write_bmp_2D_int(const char* path, const unsigned width, const unsigned height, const std::vector<std::vector<int>> data);
+
+	std::vector<std::vector<int>> positions;
+	std::vector<std::vector<int>> cluster;
 public:
 	Eden(size_t N);
 	void Licz();
+	void run();
 };
 
