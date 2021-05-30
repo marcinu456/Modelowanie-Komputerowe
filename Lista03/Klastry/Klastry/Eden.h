@@ -18,11 +18,13 @@ class Eden
 	double offset = std::sqrt(std::sqrt(2));
 	double offsetMultiplier = offset;
 	std::vector<std::vector<bool>> arr;
+	std::vector<std::vector<int>> cluster;
+	std::vector<int> liveCell;
 	void write_bmp(const char* path, const unsigned width, const unsigned height, const bool* const data);
 	void write_bmp_2D(const char* path, const unsigned width, const unsigned height, const std::vector<std::vector<bool>> data);
 	void write_bmp_2D_int(const char* path, const unsigned width, const unsigned height, const std::vector<std::vector<int>> data);
 	double find_r();
-	std::vector<std::vector<int>> cluster;
+	
 public:
 	Eden(size_t N);
 	void Licz();

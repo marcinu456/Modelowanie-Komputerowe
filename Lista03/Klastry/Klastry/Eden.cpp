@@ -104,7 +104,7 @@ void Eden::Licz()
 	std::vector<Cell> alive;
 	Cell cell;
 	alive.push_back(cell);
-
+	liveCell.push_back(0);
 	alive[0].currentState = true;
 	alive[0].activeNeighbors = 0;
 	alive[0].posX = N / 2;
@@ -119,11 +119,11 @@ void Eden::Licz()
 	std::ofstream ofs((dirName_0 + fileName).c_str(), std::ofstream::out);
 	int currentlive = 0;
 	for (size_t iter = 0; iter < TOTAL_ITER; iter++) {
-		std::uniform_int_distribution<int> dupa(0.0, currentlive);
+		std::uniform_int_distribution<int> distro(0.0, liveCell.size()-1);
 		bool done = true;
 		while (done)
 		{
-			int srng = (dupa(rd));
+			int srng = liveCell[(distro(rd))];
 
 				if (alive[srng].currentState == true)
 				{
@@ -150,11 +150,13 @@ void Eden::Licz()
 							if (alive[srng].activeNeighbors == 4)
 							{
 								alive[srng].currentState = false;
+								liveCell.erase(std::remove(liveCell.begin(), liveCell.end(), srng), liveCell.end());
 							}
 							done = false;
 							currentlive++;
 							std::vector<int> helper{ posX + 1,posY };
 							cluster.push_back(helper);
+							liveCell.push_back(currentlive);
 						}
 						break;
 					}
@@ -180,6 +182,7 @@ void Eden::Licz()
 							currentlive++;
 							std::vector<int> helper{ posX - 1,posY };
 							cluster.push_back(helper);
+							liveCell.push_back(currentlive);
 						}
 						break;
 					}
@@ -205,6 +208,7 @@ void Eden::Licz()
 							currentlive++;
 							std::vector<int> helper{ posX,posY + 1 };
 							cluster.push_back(helper);
+							liveCell.push_back(currentlive);
 						}
 						break;
 					}
@@ -230,6 +234,7 @@ void Eden::Licz()
 							currentlive++;
 							std::vector<int> helper{ posX,posY - 1 };
 							cluster.push_back(helper);
+							liveCell.push_back(currentlive);
 						}
 						break;
 					}
