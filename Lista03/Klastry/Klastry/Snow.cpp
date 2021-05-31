@@ -41,7 +41,7 @@ void Snow::Licz(const size_t MODE)
 	static std::uniform_real_distribution<double> dist(0.0, 1.0);
 	bool arr[NN] = { false };
 	arr[N / 2 + NN / 2] = true;
-	if (MODE == 2) {
+	if (MODE == 1) {
 		arr[N / 2 + 1 + NN / 2] = true;
 		arr[N / 2 + 1 + NN / 2 + N] = true;
 		arr[N / 2 + NN / 2 + N] = true;
@@ -51,10 +51,6 @@ void Snow::Licz(const size_t MODE)
 	std::filesystem::create_directory(dirName_0.c_str());
 	std::string dirName_1 = dirName_0 + "snow_img_mode" + std::to_string(MODE) + "/";
 	std::filesystem::create_directory(dirName_1.c_str());
-
-	std::string fileName = "snowGrowth_" + std::to_string(MODE) + ".txt";
-	std::ofstream ofs;
-	if (!std::filesystem::exists((dirName_0 + fileName).c_str())) ofs.open((dirName_0 + fileName).c_str(), std::ofstream::out);
 	for (size_t iter = 0; iter < TOTAL_ITER; iter++) {
 
 
@@ -82,13 +78,10 @@ void Snow::Licz(const size_t MODE)
 			*potent[i] = true;
 		}
 
-
-
-		if (!((iter + 1) % static_cast<long>(offset))) {
+		if ((iter + 1) % 5 == 0) {
 			offset *= offsetMultiplier;
 			std::string imgName = "snow(" + std::to_string(iter) + ").bmp";
 			write_bmp((dirName_1 + imgName).c_str(), N, N, arr);
 		}
 	}
-	ofs.close();
 }

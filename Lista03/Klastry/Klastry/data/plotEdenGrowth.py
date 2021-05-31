@@ -7,7 +7,7 @@ t, r = np.loadtxt("D:\\GitKraken\\Modelowanie-Komputerowe\\Lista03\\Klastry\\Kla
 plt.plot(t, r, "ro", label="r")
 #plt.plot(t, [rr*2 for rr in r], "mo", label="d")
 plt.plot(t, t**(1/2), "b-", label="N**(1/2)")
-plt.title("cluster radius over time EDEN")
+plt.title("Promien klastra Edena w czasie")
 plt.xlabel("time")
 plt.ylabel("R")
 

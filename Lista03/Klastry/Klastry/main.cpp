@@ -8,14 +8,19 @@
 #include <string>
 #include <stdint.h>
 #include "Eden.h"
+#include "DLA.h"
 #include "Snow.h"
 
 int main() {
 
-	Eden eden(1000);
-	eden.Licz();
-	//Snow snow;
-	//snow.Licz(1);
+	//Eden eden(1000);
+	//eden.Licz();
+
+	//DLA dla(1000);
+	//dla.Licz();
+
+	Snow snow;
+	snow.Licz(1);
 
 
 	return 0;

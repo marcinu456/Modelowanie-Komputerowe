@@ -177,6 +177,7 @@ void Eden::Licz()
 							if (alive[srng].activeNeighbors == 4)
 							{
 								alive[srng].currentState = false;
+								liveCell.erase(std::remove(liveCell.begin(), liveCell.end(), srng), liveCell.end());
 							}
 							done = false;
 							currentlive++;
@@ -203,6 +204,7 @@ void Eden::Licz()
 							if (alive[srng].activeNeighbors == 4)
 							{
 								alive[srng].currentState = false;
+								liveCell.erase(std::remove(liveCell.begin(), liveCell.end(), srng), liveCell.end());
 							}
 							done = false;
 							currentlive++;
@@ -229,6 +231,7 @@ void Eden::Licz()
 							if (alive[srng].activeNeighbors == 4)
 							{
 								alive[srng].currentState = false;
+								liveCell.erase(std::remove(liveCell.begin(), liveCell.end(), srng), liveCell.end());
 							}
 							done = false;
 							currentlive++;
@@ -243,7 +246,7 @@ void Eden::Licz()
 
 		}
 
-		if (!((iter + 1) % static_cast<long>(offset))) {
+		if ((iter + 1) % 100 == 0) {
 			offset *= offsetMultiplier;
 			ofs << iter + 2 << " " << find_r() << "\n";
 			std::string imgName = "eden(" + std::to_string(iter) + ").bmp";
@@ -256,7 +259,7 @@ void Eden::Licz()
 
 double Eden::find_r()
 {
-	int sum_x = 0;
+	/*int sum_x = 0;
 	int sum_y = 0;
 	for (int i = 0; i < cluster.size(); i++)
 	{
@@ -276,6 +279,18 @@ double Eden::find_r()
 		if (c_r > r)
 			r = c_r;
 	}
-	return r;
+	return r;*/
+
+	double max_radius = 0.0;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			if (arr[i][j]) {
+				double r = std::sqrt(pow(i - static_cast<int>(N / 2), 2) + pow(j - static_cast<int>(N / 2), 2));
+				if (max_radius < r) max_radius = r;
+			}
+		}
+	}
+
+	return max_radius;
 
 }
