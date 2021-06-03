@@ -39,6 +39,7 @@
     </ClCompile>
     <ClCompile Include="src\Agent.cpp" />
     <ClCompile Include="src\Tree.cpp" />
+    <ClCompile Include="src\House.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -96,6 +97,7 @@
     </ClInclude>
     <ClInclude Include="src\Agent.h" />
     <ClInclude Include="src\Tree.h" />
+    <ClInclude Include="src\House.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

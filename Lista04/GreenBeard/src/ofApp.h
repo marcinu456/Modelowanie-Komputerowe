@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "House.h"
 #include "Agent.h"
 #include "Tree.h"
 #include <iostream>
@@ -15,6 +16,7 @@
 # define M_PI           3.14159265358979323846  /* pi */
 class ofApp : public ofBaseApp{
 	std::vector<Agent> population;
+	std::vector<House> houses;
 	std::vector<Tree> trees;
 	size_t countOfPopulation = 80;
 	size_t numberOfTrees = 100;

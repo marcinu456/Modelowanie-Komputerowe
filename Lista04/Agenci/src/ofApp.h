@@ -3,17 +3,22 @@
 #include "ofMain.h"
 #include <vector>
 #include "agent.h"
+#include "ofxGraph.h"
 
 class ofApp : public ofBaseApp{
-	const size_t COUNT;
-	const size_t INFECTED_COUNT;
-	const int RECOVERY_TIME;
-	const float SIZE;
+	const size_t countOfPopulation;
+	const size_t countOfInvected;
+	const int IllTime;
+	const float PeopleSize;
 	const float VELOCITY;
-	const double PROB;
+	const double IllProbolity;
+	bool Reinfected = 1;
+	size_t iter = 0;
+	size_t totalIter = 300;
+	std::ofstream ofs;
 
 	std::vector<Agent> population;
-
+	ofxGraph graph;
 	public:
 		ofApp();
 		void setup();

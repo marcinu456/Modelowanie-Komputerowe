@@ -12,7 +12,7 @@ void ofApp::setup(){
 		test.x = cos(alpha) * (1000 / 2 - 1) + 1000 / 2;
 		test.y = sin(alpha) * (1000 / 2 - 1) + 1000 / 2;
 		//test.x = cos(alpha) * (ofRandom(PeopleSize, 1000 - PeopleSize) / 2 - 1) + 1000 / 2; inside
-//test.y = sin(alpha) * (ofRandom(PeopleSize, 1000 - PeopleSize) / 2 - 1) + 1000 / 2; inside
+		//test.y = sin(alpha) * (ofRandom(PeopleSize, 1000 - PeopleSize) / 2 - 1) + 1000 / 2; inside
 		Agent agent(ofVec2f(test.x, test.y));
 		population.push_back(agent);
 	}
