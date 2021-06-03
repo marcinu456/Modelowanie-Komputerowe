@@ -1,0 +1,4 @@
+ofxGui
+ofxHistoryPlot
+ofxVectorGraphics
+ofxXmlSettings

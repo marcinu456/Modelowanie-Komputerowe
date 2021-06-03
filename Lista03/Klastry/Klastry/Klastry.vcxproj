@@ -146,7 +146,6 @@
     <ClCompile Include="DLA.cpp" />
     <ClCompile Include="Eden.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="old.cpp" />
     <ClCompile Include="Snow.cpp" />
   </ItemGroup>
   <ItemGroup>
