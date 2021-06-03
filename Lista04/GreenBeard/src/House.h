@@ -1,6 +1,7 @@
 #pragma once
 #include "ofMain.h"
 #include "Agent.h"
+#include <random>
 class House
 {
 public:
@@ -8,5 +9,6 @@ public:
 	ofVec2f position;
 	int addres;
 	House(ofVec2f position, int addres);
+	void Grow();
 };
 

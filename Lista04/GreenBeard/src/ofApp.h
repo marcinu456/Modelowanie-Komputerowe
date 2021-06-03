@@ -15,12 +15,21 @@
 #include <stdint.h>
 # define M_PI           3.14159265358979323846  /* pi */
 class ofApp : public ofBaseApp{
-	std::vector<Agent> population;
+
 	std::vector<House> houses;
 	std::vector<Tree> trees;
-	size_t countOfPopulation = 80;
-	size_t numberOfTrees = 100;
-	size_t PeopleSize = 15;
+	size_t countOfPopulation = 0;
+	size_t countOfHouse = 80;
+	size_t countOfTrees = 1000;
+	size_t houseSize = 50;
+	size_t treeSize = 30;
+	size_t numberOfPredators = 80;
+	ofEasyCam camera;
+
+	std::ofstream ofs;
+
+	size_t iter = 0;
+	size_t totalIter = 300;
 	public:
 		void setup();
 		void update();
