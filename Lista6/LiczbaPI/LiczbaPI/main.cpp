@@ -7,8 +7,7 @@ int main(int argc, char* argv[]) {
 
 
         MPI_Init(&argc, &argv);
-        for (int j = 0; j < 10; j++)
-        {
+
         int rank;
         MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
@@ -19,7 +18,7 @@ int main(int argc, char* argv[]) {
         std::random_device rd{};
         std::mt19937 engine{ rd() };
         std::uniform_real_distribution<double> dis(0.0, DBL_MAX);
-        long long N = 3'000'000'000;
+        long long N = 100'000'000'000;
         long long i;
         double x, y, n = 0, recv;
 
@@ -33,7 +32,7 @@ int main(int argc, char* argv[]) {
 
         if (rank == 0)
             std::cout << "PI  = " << std::setprecision(10) << 4.0 * recv / N << "\n";
-    }
+    
         MPI_Finalize();
     
     return 0;
