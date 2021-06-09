@@ -25,14 +25,16 @@ private:
 	double mass1=0;
 	ofColor c1;
 
-	double g = 1;
+	double g = 0.9;
 
 public:
 	Pendulum(double px, double py, double theta0, double length0, double mass0, double theta1, double length1, double mass1);
 
 	void setColors(ofColor _color0, ofColor _color1);
 	void setColor(ofColor _color);
-	void computetions(double dt);
+	void computeAnglesEuler(double dt);
+	void computeAnglesRunge(double dt);
+	void computePosition();
 
 	void drawLines();
 

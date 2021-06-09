@@ -7,7 +7,14 @@
 class ofApp : public ofBaseApp {
 
 	std::vector<Pendulum> pendulum;
-	size_t numberOfPendulus = 100;
+	size_t numberOfPendulus = 1;
+	std::vector<glm::vec4> states;
+	std::ofstream ofs_energy;
+	std::ofstream ofs_positions;
+	std::ofstream ofs_phases;
+
+
+
 public:
 	void setup();
 	void update();
@@ -24,7 +31,7 @@ public:
 	void windowResized(int w, int h);
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
-
+	~ofApp();
 };
 
 

@@ -1,22 +1,123 @@
 #include "ofApp.h"
 
+void write_bmp(const char* path, const unsigned width, const unsigned height, const std::vector<std::vector<float>> data) {
+	const unsigned pad = (4 - (3 * width) % 4) % 4, filesize = 54 + (3 * width + pad) * height; // horizontal line must be a multiple of 4 bytes long, header is 54 bytes
+	char header[54] = { 'B','M', 0,0,0,0, 0,0,0,0, 54,0,0,0, 40,0,0,0, 0,0,0,0, 0,0,0,0, 1,0,24,0 };
+	for (unsigned i = 0; i < 4; i++) {
+		header[2 + i] = (char)((filesize >> (8 * i)) & 255);
+		header[18 + i] = (char)((width >> (8 * i)) & 255);
+		header[22 + i] = (char)((height >> (8 * i)) & 255);
+	}
+std:vector<char> img(filesize);
+	for (unsigned i = 0; i < 54; i++) img[i] = header[i];
+	for (unsigned y = 0; y < height; y++) {
+		for (unsigned x = 0; x < width; x++) {
+			const int i = 54 + 3 * x + y * (3 * width + pad);
+			img[i] = static_cast<char>(255 * data[x][y]);
+			img[i + 1] = static_cast<char>(255 * data[x][y]);
+			img[i + 2] = static_cast<char>(255 * data[x][y]);
+		}
+		for (unsigned p = 0; p < pad; p++) img[54 + (3 * width + p) + y * (3 * width + pad)] = 0;
+	}
+	std::ofstream file(path, std::ios::out | std::ios::binary);
+	file.write(&img[0], filesize);
+	file.close();
+}
+
+
+ofApp::~ofApp() {
+		std::vector<std::vector<float>> matrix(states.size());
+		float max = -1.0;
+		for (int i = 0; i < states.size(); i++) {
+			matrix[i] = std::vector<float>(states.size());
+			for (int j = i + 1; j < states.size(); j++) {
+				matrix[i][j] = glm::length(states[i] - states[j]);
+				if (matrix[i][j] > max) {
+					max = matrix[i][j];
+				}
+			}
+		}
+		for (int i = 0; i < states.size(); i++) {
+			for (int j = i + 1; j < states.size(); j++) {
+				matrix[i][j] = matrix[i][j] / max;
+				matrix[j][i] = matrix[i][j];
+			}
+		}
+		write_bmp("test.bmp", states.size(), states.size(), matrix);
+	
+
+	ofs_energy.close();
+
+	ofs_positions.close();
+
+	ofs_phases.close();
+
+}
+
+
 //--------------------------------------------------------------
 void ofApp::setup() {
 
 
 	for (size_t i = 0; i < numberOfPendulus; i++)
 	{
-		pendulum.push_back(Pendulum(400, 400, M_PI * 0.45, 100, 1, M_PI * 0.45 + 0.00001 * (double(i) / double(numberOfPendulus)) - .5, 100, 1));
+		pendulum.push_back(Pendulum(400, 400, M_PI * 0.56, 100, 1, M_PI * 0.56 + 0.0001 * (double(i) / double(numberOfPendulus)) - .5, 100, 1));
 	}
-	
+	ofs_energy.open("data/energy.txt");
+	ofs_positions.open("data/positions.txt");
+	ofs_phases.open("data/phases.txt");
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
 	for (size_t i = 0; i < numberOfPendulus; i++)
 	{
-		pendulum[i].computetions(.9);
+		pendulum[i].computeAnglesRunge(.5);
+		pendulum[i].computePosition();
 	}
+
+
+	static unsigned long iter = -1;
+	iter++;
+
+		static double offset = std::sqrt(std::sqrt(2));
+		static const double offsetMultiplier = offset;
+
+		if (!((iter + 1) % static_cast<unsigned long>(50))) {
+			offset *= offsetMultiplier;
+			states.emplace_back(pendulum[0].getState());
+		}
+	
+
+
+		static unsigned int i_en = 0;
+		if (!(i_en % 10)) {
+			ofs_energy << pendulum[0].streamEnergy() << " " << pendulum.back().streamEnergy() << "\n";
+			i_en = 1;
+		}
+		else {
+			i_en++;
+		}
+	
+
+		static unsigned int i_pos = 0;
+		if (!(i_pos % 10)) {
+			ofs_positions << pendulum[0].streamPosition() << " " << pendulum.back().streamPosition() << "\n";
+			i_pos = 1;
+		}
+		else {
+			i_pos++;
+		}
+	
+		static unsigned int i_ph = 0;
+		if (!(i_ph % 10)) {
+			ofs_phases << pendulum[0].streamPhase() << " " << pendulum.back().streamPhase() << "\n";
+			i_ph = 1;
+		}
+		else {
+			i_ph++;
+		}
+	
 
 }
 
@@ -108,29 +209,7 @@ ofFloatColor palette( float t, ofVec3f a, ofVec3f b, ofVec3f c, ofVec3f d )
 	return ofFloatColor(temp[0], temp[1], temp[2]);
 }
 
-void write_bmp(const char* path, const unsigned width, const unsigned height, const std::vector<std::vector<float>> data) {
-	const unsigned pad = (4 - (3 * width) % 4) % 4, filesize = 54 + (3 * width + pad) * height; // horizontal line must be a multiple of 4 bytes long, header is 54 bytes
-	char header[54] = { 'B','M', 0,0,0,0, 0,0,0,0, 54,0,0,0, 40,0,0,0, 0,0,0,0, 0,0,0,0, 1,0,24,0 };
-	for (unsigned i = 0; i < 4; i++) {
-		header[2 + i] = (char)((filesize >> (8 * i)) & 255);
-		header[18 + i] = (char)((width >> (8 * i)) & 255);
-		header[22 + i] = (char)((height >> (8 * i)) & 255);
-	}
-	std:vector<char> img(filesize);
-	for (unsigned i = 0; i < 54; i++) img[i] = header[i];
-	for (unsigned y = 0; y < height; y++) {
-		for (unsigned x = 0; x < width; x++) {
-			const int i = 54 + 3 * x + y * (3 * width + pad);
-			img[i]     = static_cast<char>(255 * data[x][y]);
-			img[i + 1] = static_cast<char>(255 * data[x][y]);
-			img[i + 2] = static_cast<char>(255 * data[x][y]);
-		}
-		for (unsigned p = 0; p < pad; p++) img[54 + (3 * width + p) + y * (3 * width + pad)] = 0;
-	}
-	std::ofstream file(path, std::ios::out | std::ios::binary);
-	file.write(&img[0], filesize);
-	file.close();
-}
+
 
 ofApp::ofApp():
 	PENDULUMS_COUNT(100),
