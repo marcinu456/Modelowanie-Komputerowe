@@ -25,8 +25,9 @@ private:
 	double mass1=0;
 	ofColor c1;
 
-	double g = 0.9;
-
+	double g = 9.81;
+	vector<ofPoint> points;
+	ofVec2f point;
 public:
 	Pendulum(double px, double py, double theta0, double length0, double mass0, double theta1, double length1, double mass1);
 
@@ -37,7 +38,8 @@ public:
 	void computePosition();
 
 	void drawLines();
-
+	void trails();
+	void air();
 
 	glm::vec4 getState();
 	std::stringstream streamEnergy();

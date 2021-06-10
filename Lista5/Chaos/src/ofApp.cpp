@@ -61,7 +61,7 @@ void ofApp::setup() {
 
 	for (size_t i = 0; i < numberOfPendulus; i++)
 	{
-		pendulum.push_back(Pendulum(400, 400, M_PI * 0.56, 100, 1, M_PI * 0.56 + 0.0001 * (double(i) / double(numberOfPendulus)) - .5, 100, 1));
+		pendulum.push_back(Pendulum(400, 400, M_PI / 2.0 + 0.15, 150, 1, M_PI / 2.0 + 0.15 + 0.0001 * i, 150, 1));
 	}
 	ofs_energy.open("data/energy.txt");
 	ofs_positions.open("data/positions.txt");
@@ -72,8 +72,9 @@ void ofApp::setup() {
 void ofApp::update() {
 	for (size_t i = 0; i < numberOfPendulus; i++)
 	{
-		pendulum[i].computeAnglesRunge(.5);
+		pendulum[i].computeAnglesRunge(.05);
 		pendulum[i].computePosition();
+		//pendulum[i].air();
 	}
 
 
@@ -126,6 +127,7 @@ void ofApp::draw() {
 	for (size_t i = 0; i < numberOfPendulus; i++)
 	{
 		pendulum[i].drawLines();
+		pendulum[i].trails();
 	}
 
 }
