@@ -1,9 +1,13 @@
 #pragma once
 
 #include "ofMain.h"
-
+#include "Butterfly.h"
 class ofApp : public ofBaseApp{
 
+	std::vector<Butterfly> butterfly;
+	size_t numberOfButterfly = 1;
+	ofEasyCam cam;
+	size_t iter = 0;
 	public:
 		void setup();
 		void update();

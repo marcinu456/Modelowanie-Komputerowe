@@ -180,6 +180,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Butterfly.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxBaseGui.cpp" />
@@ -194,6 +195,7 @@
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxToggle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Butterfly.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxBaseGui.h" />
     <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxButton.h" />
