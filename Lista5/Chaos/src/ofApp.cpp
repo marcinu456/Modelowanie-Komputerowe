@@ -61,11 +61,15 @@ void ofApp::setup() {
 
 	for (size_t i = 0; i < numberOfPendulus; i++)
 	{
-		pendulum.push_back(Pendulum(400, 400, M_PI / 2.0 + 0.15, 150, 1, M_PI / 2.0 + 0.15 + 0.0001 * i, 150, 1));
+		//pendulum.push_back(Pendulum(400, 400, M_PI / 2.0 + 0.15, 150, 1, M_PI / 2.0 + 0.15 + 0.0001 * (i/double(numberOfPendulus)), 150, 1));
+		pendulum.push_back(Pendulum(400, 400, 0.1 * M_PI, 150, 1, 0.1* M_PI, 150, 1));
+		pendulum[i].setColors(ofColor::brown, ofColor::white, ofColor::yellow);
 	}
 	ofs_energy.open("data/energy.txt");
 	ofs_positions.open("data/positions.txt");
 	ofs_phases.open("data/phases.txt");
+	
+
 }
 
 //--------------------------------------------------------------
@@ -81,11 +85,8 @@ void ofApp::update() {
 	static unsigned long iter = -1;
 	iter++;
 
-		static double offset = std::sqrt(std::sqrt(2));
-		static const double offsetMultiplier = offset;
-
 		if (!((iter + 1) % static_cast<unsigned long>(50))) {
-			offset *= offsetMultiplier;
+
 			states.emplace_back(pendulum[0].getState());
 		}
 	
@@ -119,7 +120,10 @@ void ofApp::update() {
 			i_ph++;
 		}
 	
-
+		if (iter > 12000)
+		{
+			OF_EXIT_APP(0);
+		}
 }
 
 //--------------------------------------------------------------

@@ -3,6 +3,14 @@
 Pendulum::Pendulum(double px, double py, double theta0, double length0, double mass0, double theta1, double length1, double mass1):
 	px(px),py(py),theta0(theta0),length0(length0),mass0(mass0), theta1(theta1), length1(length1), mass1(mass1)
 {
+	points.resize(100);
+}
+
+void Pendulum::setColors(ofColor _color0, ofColor _color1, ofColor _color2)
+{
+	color0 = _color0;
+	color1 = _color1;
+	color2 = _color2;
 }
 
 void Pendulum::computeAnglesEuler(double dt)
@@ -51,28 +59,32 @@ void Pendulum::computePosition()
 
 void Pendulum::drawLines()
 {
-	//ofSetColor(c0, 255);
-	ofSetColor(ofColor::brown);
+	ofSetColor(color0);
+	//ofSetColor(ofColor::brown);
 	ofDrawLine(px, py, x0, y0);
 
-	//ofSetColor(c1, 255);
-	ofSetColor(ofColor::white);
+	ofSetColor(color1);
+	//ofSetColor(ofColor::white);
 	ofDrawLine(x0, y0, x1, y1);
 }
 
 void Pendulum::trails()
 {
-	ofSetColor(ofColor::yellow);
-	//x,y location stored in a vector array
+
+	ofSetColor(color2);
+
 	ofVec2f tmp;
 	tmp.x = x1;
 	tmp.y = y1;
-	points.push_back(tmp);
+	
+	points[itera % 100] = tmp;
+	//points.push_back(tmp);
 
 	for (int i = 0; i < points.size(); i++) {
 		point = points[i];
 		ofDrawCircle(point.x, point.y, 1, 1);
 	}
+	itera++;
 }
 
 void Pendulum::air()
@@ -82,13 +94,13 @@ void Pendulum::air()
 }
 
 glm::vec4 Pendulum::getState() {
-	return glm::vec4(theta0, theta0prim, theta1, theta1);
+	return glm::vec4(theta0, theta0prim, theta1, theta1prim);
 }
 
 
 std::stringstream Pendulum::streamEnergy() {
-	double ek = mass0 * pow(theta0prim * 150, 2) / 2 + mass1 * pow(theta1 * 150, 2) / 2;
-	double ep = mass0 * g * (-y0 + (400 + 150)) + mass1 * g * (-y1 + (400 + 150));
+	double ek = mass0 * pow(theta0prim * length0, 2) / 2 + mass1 * pow(theta1prim * length1, 2) / 2;
+	double ep = mass0 * g * (-y0 + (px + length0)) + mass1 * g * (-y1 + (px + length1));
 
 	return std::stringstream() << ek << " " << ep << " " << ek + ep;
 }
@@ -96,5 +108,5 @@ std::stringstream Pendulum::streamPosition() {
 	return std::stringstream() << x1 << " " << 800 - y1;
 }
 std::stringstream Pendulum::streamPhase() {
-	return std::stringstream() << theta0 << " " << theta0prim << " " << theta1 << " " << theta1;
+	return std::stringstream() << theta0 << " " << theta0prim << " " << theta1 << " " << theta1prim;
 }
