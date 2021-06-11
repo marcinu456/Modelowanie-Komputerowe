@@ -15,13 +15,25 @@ void Pendulum::setColors(ofColor _color0, ofColor _color1, ofColor _color2)
 
 void Pendulum::computeAnglesEuler(double dt)
 {
-	theta0bis = -g * (2 * mass0 + mass1) * std::sin(theta0) - mass1 * g * std::sin(theta0 - 2 * theta1) - 2 * std::sin(theta0 - theta1) * mass1 *
+	/*theta0bis = -g * (2 * mass0 + mass1) * std::sin(theta0) - mass1 * g * std::sin(theta0 - 2 * theta1) - 2 * std::sin(theta0 - theta1) * mass1 *
 		(theta1prim * theta1prim * length1 + theta0prim * theta0prim * length0 * std::cos(theta0 - theta1));
 	theta0bis /= length0 * (2 * mass0 * mass1 - mass1 * std::cos(2 * theta0 - 2 * theta1));
 
 	theta1bis = 2 * std::sin(theta0 - theta1) * (theta0prim * theta0prim * length0 * (mass0 + mass1) + g * (mass0 + mass1) * std::cos(theta0) +
 		theta1prim * theta1prim * length1 * mass1 * std::cos(theta0 - theta1));
-	theta1bis /= length1 * (2 * mass0 + mass1 - mass1 * std::cos(2 * theta0 - 2 * theta1));
+	theta1bis /= length1 * (2 * mass0 + mass1 - mass1 * std::cos(2 * theta0 - 2 * theta1));*/
+
+	//source http://www.team.kdm.p.lodz.pl/master/Jankowski.pdf
+	double u = 1 + mass0 + mass1;
+	theta0bis =
+		(g * (sin(theta1) * cos(theta0 - theta1) - u * sin(theta0))
+			- (length1 * pow(theta1prim, 2) + length0 * pow(theta0prim, 2) * cos(theta0 - theta1)) * sin(theta0 - theta1))
+		/ (length0 * (u - pow(cos(theta0 - theta1), 2)));
+	theta1bis =
+		(g * u * (sin(theta0) * cos(theta0 - theta1) - sin(theta1)) + (u * length0 * pow(theta0prim, 2)
+			+ length1 * pow(theta1prim, 2) * cos(theta0 - theta1)) * sin(theta0 - theta1))
+		/ (length1 * (u - pow(cos(theta0 - theta1), 2)));
+
 
 	theta0prim = theta0prim + theta0bis * dt;
 	theta1prim = theta1prim + theta1bis * dt;
@@ -32,12 +44,12 @@ void Pendulum::computeAnglesEuler(double dt)
 
 void Pendulum::computeAnglesRunge(double dt)
 {
-
-	theta0bis = -g * (2 * mass0 + mass1) * sin(theta0) - mass1 * 0.4 * sin(theta0 - (2 * theta1)) - 2 * (sin(theta0 - theta1)) * mass0 * ((theta1prim * theta1prim) * length1 + (theta0prim * theta0prim) * length0 * cos(theta0 - theta1));
+	//source https://www.myphysicslab.com/pendulum/double-pendulum-en.html
+	theta0bis = -g * (2 * mass0 + mass1) * sin(theta0) - mass1 * g * sin(theta0 - (2 * theta1)) - 2 * (sin(theta0 - theta1)) * mass0 * ((theta1prim * theta1prim) * length1 + (theta0prim * theta0prim) * length0 * cos(theta0 - theta1));
 
 	theta0bis /= length0 * (2 * mass0 + mass1 - mass1 * cos(2 * theta0 - 2 * theta0));
 
-	theta1bis = 2 * sin(theta0 - theta1) * ((theta0prim * theta0prim) * length0 * (mass0 + mass1) + 0.4 * (mass0 + mass1) * cos(theta0) + (theta1prim * theta1prim) * length1 * mass1 * cos(theta0 - theta1));
+	theta1bis = 2 * sin(theta0 - theta1) * ((theta0prim * theta0prim) * length0 * (mass0 + mass1) + g * (mass0 + mass1) * cos(theta0) + (theta1prim * theta1prim) * length1 * mass1 * cos(theta0 - theta1));
 
 	theta1bis /= length1 * (2 * mass0 + mass1 - mass1 * cos(2 * theta0 - 2 * theta1));
 
@@ -104,6 +116,7 @@ std::stringstream Pendulum::streamEnergy() {
 
 	return std::stringstream() << ek << " " << ep << " " << ek + ep;
 }
+
 std::stringstream Pendulum::streamPosition() {
 	return std::stringstream() << x1 << " " << 800 - y1;
 }

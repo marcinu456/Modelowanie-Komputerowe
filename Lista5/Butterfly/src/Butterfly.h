@@ -8,7 +8,7 @@ private:
 	ofPoint point;
 	size_t itera = 0;
 	vector <ofColor> color0;
-	size_t number = 5000;
+	size_t number = 1000;
 public:
 	Butterfly(ofPoint _point);
 

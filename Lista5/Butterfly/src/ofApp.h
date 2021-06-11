@@ -5,7 +5,7 @@
 class ofApp : public ofBaseApp{
 
 	std::vector<Butterfly> butterfly;
-	size_t numberOfButterfly = 1;
+	size_t numberOfButterfly = 4;
 	ofEasyCam cam;
 	size_t iter = 0;
 	public:

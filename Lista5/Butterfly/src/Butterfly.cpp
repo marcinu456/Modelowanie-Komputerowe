@@ -31,7 +31,7 @@ void Butterfly::trails()
 
 	for (int i = 0; i < points.size(); i++) {
 		ofSetColor(color0[i]);
-		ofDrawSphere(points[i], .5);
+		ofDrawSphere(points[i], .25);
 	}
 	itera++;
 }

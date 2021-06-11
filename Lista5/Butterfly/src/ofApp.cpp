@@ -4,7 +4,7 @@
 void ofApp::setup(){
 	for (size_t i = 0; i < numberOfButterfly; i++)
 	{
-		butterfly.push_back(Butterfly(ofPoint(400,400,400)));
+		butterfly.push_back(Butterfly(ofPoint(400+i*15,400,400)));
 		butterfly[i].setColor(ofColor::brown);
 	}
 }
@@ -12,10 +12,11 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 	iter++;
-	ofColor tmp(iter%155, iter*3%250,iter*4%120);
+	
 
 	for (size_t i = 0; i < numberOfButterfly; i++)
 	{
+		ofColor tmp(iter % 255, (125+i*50)%255, 125);
 		butterfly[i].setColor(tmp);
 		butterfly[i].computePosition(.005);
 	}
@@ -25,11 +26,13 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	cam.begin();
+	ofEnableDepthTest();
 	for (size_t i = 0; i < numberOfButterfly; i++)
 	{
 		butterfly[i].trails();
 	}
 	ofDrawSphere(ofPoint(400, 400, 400), 1);
+	ofDisableDepthTest();
 	cam.end();
 }
 
