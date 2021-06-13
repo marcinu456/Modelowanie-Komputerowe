@@ -1,12 +1,13 @@
-#include "Plant.h"
+#include "Fox.h"
+#include <cmath>
 
-Plant::Plant(ofVec2f _position, size_t _hp) :
+
+Fox::Fox(ofVec2f _position, size_t _hp) :
 	Agent(_position, _hp)
 {
-
 }
 
-void Plant::draw(ofColor color)
+void Fox::draw(ofColor color)
 {
 	ofSetColor(color);
 	/*yourModel.setPosition(position.x, position.y, 0);
@@ -14,5 +15,6 @@ void Plant::draw(ofColor color)
 	double f = 0.1;
 	yourModel.setScale(f, f, f);
 	yourModel.drawFaces();*/
-	ofDrawTriangle(position, ofVec2f(position.x + 20, position.y), ofVec2f(position.x + 10, position.y+20));
+	ofDrawCircle(position, 10);
 }
+

@@ -1,9 +1,14 @@
 #include <iostream>
-
+#include <fstream>
+#include <filesystem>
 int main()
 {
-	double a = 0.4340000;
-	double b = 0.4340001;
+	std::ofstream ofs_a;
+	std::ofstream ofs_b;
+	ofs_a.open("a.txt");
+	ofs_b.open("b.txt");
+	double a = 0.50001;
+	double b = 0.50002;
 	double lambada = 1.999;
 
 	for (size_t i = 0; i < 1000; i++)
@@ -19,6 +24,10 @@ int main()
 			b -= 1.0;
 		}
 		//std::cout << a << std::endl;
-		std::cout << b << std::endl;
+		//std::cout << b << std::endl;
+		ofs_a << a << std::endl;
+		ofs_b << b << std::endl;
+		//std::cout << a << std::endl;
+		//std::cout << b << std::endl;
 	}
 }

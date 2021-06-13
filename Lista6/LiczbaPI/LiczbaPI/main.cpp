@@ -17,15 +17,15 @@ int main(int argc, char* argv[]) {
 
         std::random_device rd{};
         std::mt19937 engine{ rd() };
-        std::uniform_real_distribution<double> dis(0.0, DBL_MAX);
-        long long N = 100'000'000'000;
+        std::uniform_real_distribution<double> dis(-1.0, 1);
+        long long N = 10'000'000'000;
         long long i;
         double x, y, n = 0, recv;
 
         for (i = 1; i < N / numprocs; i++) {
-            x = (dis(rd) / (DBL_MAX));
-            y = (dis(rd) / (DBL_MAX));
-            if (x * x + y * y <= 1) n++;
+            x = dis(rd);
+            y = dis(rd);
+            if (x * x + y * y <= 1 && x * x + y * y >=-1) n++;
         }
 
         MPI_Reduce(&n, &recv, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);

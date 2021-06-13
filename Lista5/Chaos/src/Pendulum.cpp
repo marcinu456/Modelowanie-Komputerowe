@@ -117,9 +117,6 @@ std::stringstream Pendulum::streamEnergy() {
 	return std::stringstream() << ek << " " << ep << " " << ek + ep;
 }
 
-std::stringstream Pendulum::streamPosition() {
-	return std::stringstream() << x1 << " " << 800 - y1;
-}
 std::stringstream Pendulum::streamPhase() {
 	return std::stringstream() << theta0 << " " << theta0prim << " " << theta1 << " " << theta1prim;
 }

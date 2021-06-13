@@ -1,34 +1,7 @@
 #include "ofApp.h"
 
-// Based on
-//
-// https://youtu.be/r_It_X7v-1E
-//
-
-ofApp::ofApp() :
-	SIZE(10.0),
-
-	PLANT_COUNT(8),
-	PLANT_MAX_HP(240),
-	PLANT_REPRODUCE_TIME(30),
-	PLANT_REPRODUCE_COUNT(8),
-
-	PREY_COUNT(8),
-	PREY_MAX_HP(300),
-	PREY_MAX_HUNGRY_HP_LEVEL(150),
-	PREY_VELOCITY(2.5),
-	PREY_REPRODUCE_COUNT(4),
-
-	PREDATOR_COUNT(4),
-	PREDATOR_MAX_HP(500),
-	PREDATOR_MAX_HUNGRY_HP_LEVEL(150),
-	PREDATOR_VELOCITY(2),
-	PREDATOR_REPRODUCE_COUNT(1),
-
-	plants(),
-	preys(),
-	predators()
-{
+//--------------------------------------------------------------
+void ofApp::setup(){
 	plants.reserve(PLANT_COUNT);
 	for (int i = 0; i < PLANT_COUNT; i++) {
 		plants.emplace_back(Plant(ofVec2f(ofRandom(SIZE, 1000 - SIZE), ofRandom(SIZE, 1000 - SIZE)), PLANT_MAX_HP));
@@ -36,39 +9,27 @@ ofApp::ofApp() :
 
 	preys.reserve(PREY_COUNT);
 	for (int i = 0; i < PREY_COUNT; i++) {
-		preys.emplace_back(Prey(ofVec2f(ofRandom(SIZE, 1000 - SIZE), ofRandom(SIZE, 1000 - SIZE)), PREY_MAX_HUNGRY_HP_LEVEL));
+		preys.emplace_back(Fox(ofVec2f(ofRandom(SIZE, 1000 - SIZE), ofRandom(SIZE, 1000 - SIZE)), PREY_MAX_HUNGRY_HP_LEVEL));
 	}
 
 	predators.reserve(PREDATOR_COUNT);
 	for (int i = 0; i < PREDATOR_COUNT; i++) {
-		predators.emplace_back(Predator(ofVec2f(ofRandom(SIZE, 1000 - SIZE), ofRandom(SIZE, 1000 - SIZE)), PREDATOR_MAX_HUNGRY_HP_LEVEL));
+		predators.emplace_back(Rabbit(ofVec2f(ofRandom(SIZE, 1000 - SIZE), ofRandom(SIZE, 1000 - SIZE)), PREDATOR_MAX_HUNGRY_HP_LEVEL));
 	}
 
 	std::string dirName_0 = "data/";
 	std::filesystem::create_directory(dirName_0.c_str());
-	std::string dirName_1 = dirName_0 + "symulacja/";
-	std::filesystem::create_directory(dirName_1.c_str());
 
-	ofs.open((std::string(dirName_1 + "symulacjaProby.txt").c_str()));
-}
-
-//--------------------------------------------------------------
-void ofApp::setup(){
+	ofs.open((std::string(dirName_0 + "test.txt").c_str()));
 
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
-	static constexpr bool SAVE_TO_FILE = 1;
+void ofApp::update() {
 
 
 	// plant
-	static size_t plant_reproduce_countdown;
-	if (plant_reproduce_countdown != 0) {
-		plant_reproduce_countdown--;
-	}
-	else {
-		plant_reproduce_countdown = PLANT_REPRODUCE_TIME;
+	if (iter % PLANT_REPRODUCE_TIME == 0) {
 		for (int i = 0; i < PLANT_REPRODUCE_COUNT; i++) {
 			plants.push_back(Plant(ofVec2f(ofRandom(SIZE, 1000 - SIZE), ofRandom(SIZE, 1000 - SIZE)), PLANT_MAX_HP));
 		}
@@ -88,7 +49,7 @@ void ofApp::update(){
 
 	// prey
 	for (int i = 0; i < preys.size(); i++) {
-		Prey& prey = preys[i];
+		Fox& prey = preys[i];
 		if (prey.hp != 0) {
 			prey.hp--;
 		}
@@ -99,131 +60,66 @@ void ofApp::update(){
 		}
 	}
 
-	for (int i = 0; i < preys.size(); i++) {
-		Prey& prey = preys[i];
+	for (int kol = 0; kol < 1; kol++)
+	{
+		for (int i = 0; i < preys.size(); i++) {
+			Fox& prey = preys[i];
 
-		if (prey.hp <= PREY_MAX_HUNGRY_HP_LEVEL) {
-			if (plants.size() > 0) {
-				size_t atractorIndex = 0;
-				ofVec2f atractor = plants[atractorIndex].position - prey.position;
-				float atractortDist = atractor.length();
-				for (int j = 1; j < plants.size(); j++) {
-					Plant& plant = plants[j];
-					ofVec2f vec = plant.position - prey.position;
+			if (prey.hp <= PREY_MAX_HUNGRY_HP_LEVEL) {
+				if (plants.size() > 0) {
+					size_t atractorIndex = 0;
+					ofVec2f atractor = plants[atractorIndex].position - prey.position;
+					float atractortDist = atractor.length();
+					for (int j = 1; j < plants.size(); j++) {
+						Plant& plant = plants[j];
+						ofVec2f vec = plant.position - prey.position;
+						float dist = vec.length();
+						if (dist < atractortDist) {
+							atractorIndex = j;
+							atractor = vec;
+							atractortDist = dist;
+						}
+					}
+					prey.position += atractor / atractortDist * PREY_VELOCITY;
+
+					if ((prey.position - plants[atractorIndex].position).length() < SIZE) {
+						plants.erase(plants.begin() + atractorIndex);
+						prey.hp = PREY_MAX_HP;
+					}
+				}
+			}
+			else {
+				size_t atractorIndex = i;
+				ofVec2f atractor = prey.position;
+				float atractortDist = 1000;
+				for (int j = 1; j < preys.size(); j++) {
+					Fox& partner = preys[j];
+					ofVec2f vec = partner.position - prey.position;
 					float dist = vec.length();
-					if (dist < atractortDist) {
+					if (dist < atractortDist && partner.hp > PREY_MAX_HUNGRY_HP_LEVEL && j != i) {
 						atractorIndex = j;
 						atractor = vec;
 						atractortDist = dist;
 					}
 				}
-				prey.position += atractor / atractortDist * PREY_VELOCITY;
-		
-				if ((prey.position - plants[atractorIndex].position).length() < SIZE) {
-					plants.erase(plants.begin() + atractorIndex);
-					prey.hp = PREY_MAX_HP;
-				}
-			}
-		}
-		else {
-			size_t atractorIndex = i;
-			ofVec2f atractor = prey.position;
-			float atractortDist = 1000;
-			for (int j = 1; j < preys.size(); j++) {
-				Prey& partner = preys[j];
-				ofVec2f vec = partner.position - prey.position;
-				float dist = vec.length();
-				if (dist < atractortDist && partner.hp > PREY_MAX_HUNGRY_HP_LEVEL && j != i) {
-					atractorIndex = j;
-					atractor = vec;
-					atractortDist = dist;
-				}
-			}
-			Prey& partner = preys[atractorIndex];
-			if (&prey != &partner) {
-				prey.position += atractor / atractortDist * PREY_VELOCITY;
-				if ((prey.position - preys[atractorIndex].position).length() < SIZE) {
-					prey.hp = PREY_MAX_HUNGRY_HP_LEVEL;
-					partner.hp = PREY_MAX_HUNGRY_HP_LEVEL;
-					for (int j = 0; j < PREY_REPRODUCE_COUNT; j++) {
-						preys.push_back(Prey(ofVec2f(ofRandom(SIZE, 1000 - SIZE), ofRandom(SIZE, 1000 - SIZE)), PREY_MAX_HUNGRY_HP_LEVEL));
+				Fox& partner = preys[atractorIndex];
+				if (&prey != &partner) {
+					prey.position += atractor / atractortDist * PREY_VELOCITY;
+					if ((prey.position - preys[atractorIndex].position).length() < SIZE) {
+						prey.hp = PREY_MAX_HUNGRY_HP_LEVEL;
+						partner.hp = PREY_MAX_HUNGRY_HP_LEVEL;
+						for (int j = 0; j < PREY_REPRODUCE_COUNT; j++) {
+							preys.push_back(Fox(ofVec2f(ofRandom(SIZE, 1000 - SIZE), ofRandom(SIZE, 1000 - SIZE)), PREY_MAX_HUNGRY_HP_LEVEL));
+						}
 					}
 				}
 			}
 		}
 	}
-
-	// prey
-	for (int i = 0; i < preys.size(); i++) {
-		Prey& prey = preys[i];
-		if (prey.hp != 0) {
-			prey.hp--;
-		}
-		else {
-			preys.erase(preys.begin() + i);
-			i--;
-			continue;
-		}
-	}
-
-	for (int i = 0; i < preys.size(); i++) {
-		Prey& prey = preys[i];
-
-		if (prey.hp <= PREY_MAX_HUNGRY_HP_LEVEL) {
-			if (plants.size() > 0) {
-				size_t atractorIndex = 0;
-				ofVec2f atractor = plants[atractorIndex].position - prey.position;
-				float atractortDist = atractor.length();
-				for (int j = 1; j < plants.size(); j++) {
-					Plant& plant = plants[j];
-					ofVec2f vec = plant.position - prey.position;
-					float dist = vec.length();
-					if (dist < atractortDist) {
-						atractorIndex = j;
-						atractor = vec;
-						atractortDist = dist;
-					}
-				}
-				prey.position += atractor / atractortDist * PREY_VELOCITY;
-		
-				if ((prey.position - plants[atractorIndex].position).length() < SIZE) {
-					plants.erase(plants.begin() + atractorIndex);
-					prey.hp = PREY_MAX_HP;
-				}
-			}
-		}
-		else {
-			size_t atractorIndex = i;
-			ofVec2f atractor = prey.position;
-			float atractortDist = 1000;
-			for (int j = 1; j < preys.size(); j++) {
-				Prey& partner = preys[j];
-				ofVec2f vec = partner.position - prey.position;
-				float dist = vec.length();
-				if (dist < atractortDist && partner.hp > PREY_MAX_HUNGRY_HP_LEVEL && j != i) {
-					atractorIndex = j;
-					atractor = vec;
-					atractortDist = dist;
-				}
-			}
-			Prey& partner = preys[atractorIndex];
-			if (&prey != &partner) {
-				prey.position += atractor / atractortDist * PREY_VELOCITY;
-				if ((prey.position - preys[atractorIndex].position).length() < SIZE) {
-					prey.hp = PREY_MAX_HUNGRY_HP_LEVEL;
-					partner.hp = PREY_MAX_HUNGRY_HP_LEVEL;
-					for (int j = 0; j < PREY_REPRODUCE_COUNT; j++) {
-						preys.push_back(Prey(ofVec2f(ofRandom(SIZE, 1000 - SIZE), ofRandom(SIZE, 1000 - SIZE)), PREY_MAX_HUNGRY_HP_LEVEL));
-					}
-				}
-			}
-		}
-	}
-
 
 	// predator
 	for (int i = 0; i < predators.size(); i++) {
-		Predator& predator = predators[i];
+		Rabbit& predator = predators[i];
 		if (predator.hp != 0) {
 			predator.hp--;
 		}
@@ -235,7 +131,7 @@ void ofApp::update(){
 	}
 
 	for (int i = 0; i < predators.size(); i++) {
-		Predator& predator = predators[i];
+		Rabbit& predator = predators[i];
 
 		if (predator.hp <= PREDATOR_MAX_HUNGRY_HP_LEVEL) {
 			if (preys.size() > 0) {
@@ -243,7 +139,7 @@ void ofApp::update(){
 				ofVec2f atractor = preys[atractorIndex].position - predator.position;
 				float atractortDist = atractor.length();
 				for (int j = 1; j < preys.size(); j++) {
-					Prey& prey = preys[j];
+					Fox& prey = preys[j];
 					ofVec2f vec = prey.position - predator.position;
 					float dist = vec.length();
 					if (dist < atractortDist) {
@@ -265,7 +161,7 @@ void ofApp::update(){
 			ofVec2f atractor = predator.position;
 			float atractortDist = 1000;
 			for (int j = 1; j < predators.size(); j++) {
-				Predator& partner = predators[j];
+				Rabbit& partner = predators[j];
 				ofVec2f vec = partner.position - predator.position;
 				float dist = vec.length();
 				if (dist < atractortDist && partner.hp > PREDATOR_MAX_HUNGRY_HP_LEVEL && j != i) {
@@ -274,51 +170,58 @@ void ofApp::update(){
 					atractortDist = dist;
 				}
 			}
-			Predator& partner = predators[atractorIndex];
+			Rabbit& partner = predators[atractorIndex];
 			if (&predator != &partner) {
 				predator.position += atractor / atractortDist * PREDATOR_VELOCITY;
 				if ((predator.position - predators[atractorIndex].position).length() < SIZE) {
 					predator.hp = PREDATOR_MAX_HUNGRY_HP_LEVEL;
 					partner.hp = PREDATOR_MAX_HUNGRY_HP_LEVEL;
 					for (int j = 0; j < PREDATOR_REPRODUCE_COUNT; j++) {
-						predators.push_back(Predator(ofVec2f(ofRandom(SIZE, 1000 - SIZE), ofRandom(SIZE, 1000 - SIZE)), PREDATOR_MAX_HUNGRY_HP_LEVEL));
+						predators.push_back(Rabbit(ofVec2f(ofRandom(SIZE, 1000 - SIZE), ofRandom(SIZE, 1000 - SIZE)), PREDATOR_MAX_HUNGRY_HP_LEVEL));
 					}
 				}
 			}
 		}
 	}
 
-
-	// Save to file
-	if constexpr (SAVE_TO_FILE) {
-		static constexpr size_t TIME_OVERLOAD  = 10;
-		static size_t counter = 0;
-		if(counter != TIME_OVERLOAD){
-			counter++;
-		}
-		else {
-			ofs << plants.size() << " " << preys.size() << " " << predators.size() << "\n";
-			counter = 0;
-		}
+	if(iter%10 == 0){
+		ofs << plants.size() << " " << preys.size() << " " << predators.size() << "\n";
 	}
+	iter++;
+	
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofSetColor(100, 180, 100);
+	//cam.begin();
+
 	for (int i = 0; i < plants.size(); i++) {
-		ofDrawCircle(plants[i].position, SIZE);
+		//ofDrawCircle(plants[i].position, SIZE);
+		ofColor tmp;
+		tmp.r = 50;
+		tmp.g = 255;
+		tmp.b = 0;
+		plants[i].draw(tmp);
 	}
 
-	ofSetColor(140, 140, 255);
 	for (int i = 0; i < preys.size(); i++) {
-		ofDrawCircle(preys[i].position, SIZE);
+		ofColor tmp;
+		tmp.r = 50;
+		tmp.g = 0;
+		tmp.b = 255;
+		preys[i].draw(tmp);
 	}
 
-	ofSetColor(180, 100, 100);
 	for (int i = 0; i < predators.size(); i++) {
-		ofDrawCircle(predators[i].position, SIZE);
+		ofColor tmp;
+		tmp.r = 255;
+		tmp.g = 0;
+		tmp.b = 50;
+		predators[i].draw(tmp);
 	}
+	//ofDisableDepthTest();
+	//cam.end();
+	
 }
 
 //--------------------------------------------------------------

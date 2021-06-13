@@ -100,17 +100,7 @@ void ofApp::update() {
 		else {
 			i_en++;
 		}
-	
 
-		static unsigned int i_pos = 0;
-		if (!(i_pos % 10)) {
-			ofs_positions << pendulum[0].streamPosition() << " " << pendulum.back().streamPosition() << "\n";
-			i_pos = 1;
-		}
-		else {
-			i_pos++;
-		}
-	
 		static unsigned int i_ph = 0;
 		if (!(i_ph % 10)) {
 			ofs_phases << pendulum[0].streamPhase() << " " << pendulum.back().streamPhase() << "\n";

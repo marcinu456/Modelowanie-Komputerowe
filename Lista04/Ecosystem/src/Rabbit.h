@@ -1,11 +1,10 @@
 #pragma once
 #include "Agent.h"
-class Plant :
+class Rabbit :
     public Agent
 {
-private:
 public:
-    Plant(ofVec2f _position, size_t _hp);
+    Rabbit(ofVec2f _position, size_t _hp);
     void draw(ofColor color) override;
 };
 

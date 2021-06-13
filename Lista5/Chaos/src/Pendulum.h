@@ -34,7 +34,6 @@ public:
 	Pendulum(double px, double py, double theta0, double length0, double mass0, double theta1, double length1, double mass1);
 
 	void setColors(ofColor _color0, ofColor _color1, ofColor _color2);
-	void setColor(ofColor _color);
 	void computeAnglesEuler(double dt);
 	void computeAnglesRunge(double dt);
 	void computePosition();
@@ -45,7 +44,6 @@ public:
 
 	glm::vec4 getState();
 	std::stringstream streamEnergy();
-	std::stringstream streamPosition();
 	std::stringstream streamPhase();
 
 };
