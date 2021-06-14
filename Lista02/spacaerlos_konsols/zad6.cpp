@@ -144,6 +144,6 @@ int main()
 {
     std::cout<<std::midpoint(1, 3)<<" \n";
     std::numbers::sqrt2;
-    //zad6();
+    zad6();
     return 0;
 }

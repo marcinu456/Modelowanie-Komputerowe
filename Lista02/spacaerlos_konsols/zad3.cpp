@@ -5,7 +5,7 @@
 
 void Dimension1() {
     const size_t STEPS = 1000;
-    size_t TOTAL_ITER = 100000;
+    size_t TOTAL_ITER = 1;
 
 
     std::random_device rd;
@@ -23,9 +23,9 @@ void Dimension1() {
             int krok = arr[i - 1][0] + dis(rd);
             //std::cout << krok << "dis\n";
             arr[i][0] = krok;
-            
+            myfile << krok << "\n";
         }
-        myfile << arr[STEPS-1][0] << "\n";
+       // myfile << arr[STEPS-1][0] << "\n";
        
     }
     myfile.close();

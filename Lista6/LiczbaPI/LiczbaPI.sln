@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CudaRuntime1", "CudaRuntime
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MonteCasinoOpenMP", "MonteCasinoOpenMP\MonteCasinoOpenMP.vcxproj", "{92CED3B9-59AA-4E10-B62E-0F4579F3C708}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Zad3", "Zad3\Zad3.vcxproj", "{BCD6548F-679C-45DF-B31C-B4E4B02011B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -39,6 +41,14 @@ Global
 		{92CED3B9-59AA-4E10-B62E-0F4579F3C708}.Release|x64.Build.0 = Release|x64
 		{92CED3B9-59AA-4E10-B62E-0F4579F3C708}.Release|x86.ActiveCfg = Release|Win32
 		{92CED3B9-59AA-4E10-B62E-0F4579F3C708}.Release|x86.Build.0 = Release|Win32
+		{BCD6548F-679C-45DF-B31C-B4E4B02011B8}.Debug|x64.ActiveCfg = Debug|x64
+		{BCD6548F-679C-45DF-B31C-B4E4B02011B8}.Debug|x64.Build.0 = Debug|x64
+		{BCD6548F-679C-45DF-B31C-B4E4B02011B8}.Debug|x86.ActiveCfg = Debug|Win32
+		{BCD6548F-679C-45DF-B31C-B4E4B02011B8}.Debug|x86.Build.0 = Debug|Win32
+		{BCD6548F-679C-45DF-B31C-B4E4B02011B8}.Release|x64.ActiveCfg = Release|x64
+		{BCD6548F-679C-45DF-B31C-B4E4B02011B8}.Release|x64.Build.0 = Release|x64
+		{BCD6548F-679C-45DF-B31C-B4E4B02011B8}.Release|x86.ActiveCfg = Release|Win32
+		{BCD6548F-679C-45DF-B31C-B4E4B02011B8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
