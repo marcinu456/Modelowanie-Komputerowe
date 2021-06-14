@@ -184,8 +184,8 @@
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\Agent.cpp" />
     <ClCompile Include="src\Plant.cpp" />
+    <ClCompile Include="src\Wolf.cpp" />
     <ClCompile Include="src\Rabbit.cpp" />
-    <ClCompile Include="src\Fox.cpp" />
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.cpp" />
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.cpp" />
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.cpp" />
@@ -205,8 +205,8 @@
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Agent.h" />
     <ClInclude Include="src\Plant.h" />
+    <ClInclude Include="src\Wolf.h" />
     <ClInclude Include="src\Rabbit.h" />
-    <ClInclude Include="src\Fox.h" />
     <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.h" />
     <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.h" />
     <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.h" />

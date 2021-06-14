@@ -1,13 +1,10 @@
 #pragma once
 #include "Agent.h"
-#include "ofMain.h"
-
-class Fox :
+class Wolf :
     public Agent
 {
-private:
 public:
-    Fox(ofVec2f _position, size_t _hp);
+    Wolf(ofVec2f _position, size_t _hp);
     void draw(ofColor color) override;
 };
 

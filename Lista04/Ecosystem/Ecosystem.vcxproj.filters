@@ -19,10 +19,10 @@
     <ClCompile Include="src\Plant.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rabbit.cpp">
+    <ClCompile Include="src\Wolf.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Fox.cpp">
+    <ClCompile Include="src\Rabbit.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.cpp">
@@ -122,10 +122,10 @@
     <ClInclude Include="src\Plant.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rabbit.h">
+    <ClInclude Include="src\Wolf.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Fox.h">
+    <ClInclude Include="src\Rabbit.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GrafikaFizyka\LIBs\of_v0.11.0_vs2017_release\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.h">

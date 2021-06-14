@@ -2,8 +2,8 @@
 
 #include "ofMain.h"
 #include "Plant.h"
-#include "Fox.h"
 #include "Rabbit.h"
+#include "Wolf.h"
 
 #include <vector>
 #include "ofxAssimpModelLoader.h"
@@ -19,22 +19,22 @@ class ofApp : public ofBaseApp {
 	const size_t PLANT_REPRODUCE_TIME = 30;
 	const size_t PLANT_REPRODUCE_COUNT = 8;
 
-	const size_t PREY_COUNT = 8;
-	const size_t PREY_MAX_HP = 300;
-	const size_t PREY_MAX_HUNGRY_HP_LEVEL = 150;
-	const double PREY_VELOCITY = 2.5;
-	const double PREY_REPRODUCE_COUNT = 4;
+	const size_t RABBIT_COUNT = 8;
+	const size_t RABBIT_MAX_HP = 300;
+	const size_t RABBIT_MAX_HUNGRY_HP_LEVEL = 150;
+	const double RABBIT_VELOCITY = 2.5;
+	const double RABBIT_REPRODUCE_COUNT = 4;
 
-	const size_t PREDATOR_COUNT = 4;
-	const size_t PREDATOR_MAX_HP = 500;
-	const size_t PREDATOR_MAX_HUNGRY_HP_LEVEL = 150;
-	const double PREDATOR_VELOCITY = 2;
-	const double PREDATOR_REPRODUCE_COUNT = 1;
+	const size_t WOLF_COUNT = 4;
+	const size_t WOLF_MAX_HP = 500;
+	const size_t WOLF_MAX_HUNGRY_HP_LEVEL = 150;
+	const double WOLF_VELOCITY = 2;
+	const double WOLF_REPRODUCE_COUNT = 1;
 
 
 	std::vector<Plant> plants;
-	std::vector<Fox> preys;
-	std::vector<Rabbit> predators;
+	std::vector<Rabbit> rabbits;
+	std::vector<Wolf> wolfes;
 
 	size_t iter = 0;
 	std::ofstream ofs;
